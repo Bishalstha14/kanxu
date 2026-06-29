@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Letter For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #1a1008;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+            background-image:
+                url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        .letter-container {
+            max-width: 680px;
+            width: 100%;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .parchment {
+            position: relative;
+            background: #d4b896;
+            padding: 65px 55px;
+            border-radius: 4px;
+            box-shadow:
+                0 0 0 1px rgba(80, 40, 10, 0.3),
+                0 5px 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 80px rgba(101, 60, 20, 0.3);
+            background-image:
+                radial-gradient(ellipse at 15% 10%, rgba(120, 70, 20, 0.15), transparent 40%),
+                radial-gradient(ellipse at 85% 85%, rgba(100, 50, 10, 0.2), transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(180, 140, 80, 0.1), transparent 60%),
+                radial-gradient(ellipse at 10% 90%, rgba(80, 40, 10, 0.12), transparent 35%),
+                radial-gradient(ellipse at 90% 10%, rgba(90, 50, 15, 0.1), transparent 30%);
+        }
+
+        /* Burnt/torn edges effect */
+        .parchment::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: #d4b896;
+            border-radius: 4px;
+            z-index: -1;
+            filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='5'/%3E%3C/filter%3E%3C/svg%3E#r");
+        }
+
+        /* Dark aged spots */
+        .parchment::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 5%, rgba(60, 30, 5, 0.12) 0%, transparent 8%),
+                radial-gradient(circle at 75% 15%, rgba(60, 30, 5, 0.08) 0%, transparent 5%),
+                radial-gradient(circle at 90% 80%, rgba(60, 30, 5, 0.1) 0%, transparent 10%),
+                radial-gradient(circle at 5% 70%, rgba(60, 30, 5, 0.07) 0%, transparent 6%),
+                radial-gradient(circle at 45% 95%, rgba(60, 30, 5, 0.09) 0%, transparent 7%);
+            pointer-events: none;
+            border-radius: 4px;
+        }
+
+        /* Ink blot */
+        .ink-blot {
+            position: absolute;
+            bottom: 80px;
+            left: 45px;
+            width: 12px;
+            height: 12px;
+            background: rgba(20, 10, 5, 0.25);
+            border-radius: 50% 40% 50% 45%;
+        }
+
+        /* Wax seal */
+        .wax-seal {
+            position: absolute;
+            bottom: -20px;
+            right: 55px;
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle at 35% 35%, #c0392b, #7b1a11);
+            border-radius: 50% 48% 52% 47%;
+            box-shadow:
+                0 4px 10px rgba(0,0,0,0.5),
+                inset 0 -3px 6px rgba(0,0,0,0.4),
+                inset 0 2px 4px rgba(255,200,200,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wax-seal::after {
+            content: '\2764';
+            color: rgba(255,220,220,0.5);
+            font-size: 22px;
+        }
+
+        .date-line {
+            text-align: right;
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            color: #4a2c10;
+            font-size: 0.9em;
+            margin-bottom: 35px;
+            opacity: 0.6;
+        }
+
+        .greeting {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2.2em;
+            color: #2c1505;
+            margin-bottom: 30px;
+        }
+
+        .letter-body {
+            font-family: 'IM Fell English', serif;
+            font-size: 1.1em;
+            line-height: 2;
+            color: #2c1a0a;
+        }
+
+        .letter-body p {
+            margin-bottom: 20px;
+            text-indent: 35px;
+        }
+
+        .letter-body p:first-child {
+            text-indent: 0;
+        }
+
+        .letter-body .emphasis {
+            font-style: italic;
+        }
+
+        .closing {
+            margin-top: 45px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.3em;
+            color: #2c1505;
+            text-align: right;
+            line-height: 2;
+        }
+
+        .closing .name {
+            display: block;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        /* Crease lines */
+        .crease-h {
+            position: absolute;
+            left: 30px;
+            right: 30px;
+            top: 33%;
+            border-top: 1px solid rgba(80, 40, 10, 0.08);
+        }
+
+        .crease-h2 {
+            position: absolute;
+            left: 30px;
+            right: 30px;
+            top: 66%;
+            border-top: 1px solid rgba(80, 40, 10, 0.06);
+        }
+
+        .crease-v {
+            position: absolute;
+            top: 30px;
+            bottom: 30px;
+            left: 50%;
+            border-left: 1px solid rgba(80, 40, 10, 0.05);
+        }
+
+        @media (max-width: 600px) {
+            .parchment {
+                padding: 40px 28px;
+            }
+
+            .greeting {
+                font-size: 1.7em;
+            }
+
+            .letter-body {
+                font-size: 1em;
+                line-height: 1.9;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-container">
+        <div class="parchment">
+            <div class="crease-h"></div>
+            <div class="crease-h2"></div>
+            <div class="crease-v"></div>
+            <div class="ink-blot"></div>
+
+            <div class="date-line">Written with a heavy heart</div>
+
+            <div class="greeting">My Dearest Kanxu,</div>
+
+            <div class="letter-body">
+                <p>
+                    I am sorry that you heard from another person something that never even existed from my soul. I still do not know fully what was told to you. I am sorry if you are hurt or upset because of any part of mine. I never had any such intention. Not even in my thoughts.
+                </p>
+
+                <p>
+                    It is hard for me thinking what you are going through, and it is even harder for me to understand what happened. It was like a bomb blast to me — a sudden attack — and I did not have even a second to respond. I have been blocked from every social media account, even Snapchat today. Do I deserve this from you? It has been tough — I cannot even call you even if I want to. I fell apart. Why does God always do this to a good person? I do not know why or what made this happen.
+                </p>
+
+                <p>
+                    I know I told you I talked to her once, because she kept calling me. During my conversation with her, the reason I told her that I am talking with you is because she asked me. I also told her that you know her. I simply said how you know her. That is how the conversation went. But I never said anything bad about you to her. Not even that you are mine. I only said I am currently talking to you.
+                </p>
+
+                <p>
+                    What I told her is only this — that you found her through a comment, that you saw me as a mutual friend with her, and that is how she knows. That is all. The allegations put upon me — <span class="emphasis">I deny them completely</span>. I never said those things. Why would I ever say anything about you to her if my intention was to be with you forever?
+                </p>
+
+                <p>
+                    But I do not deserve this, Kanxu. Not even in my current existence. You did not give me a chance to talk. You did not even bother to ask me what I said to her. You believed a third person over everything I built. I know she is close to you, but being close does not mean she knows the full truth of what was actually said. Was my effort to be with you weaker than one whisper from someone else? A third person broke us. I do not know what you are thinking now, but I do not deserve this — at the very least, you should have given me time to speak.
+                </p>
+
+                <p>
+                    My love, I have never thought bad about you. Never in my life. I am going through a tough time, and I know you are too. I am not here to question what happened during your conversation with her. But I am surprised — <span class="emphasis">how weak was our bond that even one pinch could break the glass?</span>
+                </p>
+
+                <p>
+                    I am sorry for what you have been through because of me. I wish God blesses you, my love. I hope you give me time to talk — that is all I ask.
+                </p>
+
+                <p>
+                    I wish your sister a beautiful and happy wedding ceremony. And best of luck for your final exams — do your best, Kanxu. I know you will.
+                </p>
+
+                <p>
+                    <span class="emphasis">I was giving you my hundred percent. Every single day. And I still would, if you let me.</span>
+                </p>
+
+                <p>
+                    Like I said to you in our very beginning conversation — I will accept you and your decision, whatever it will be. The final call is yours. I never expected the ending to come like this. I do not even expect an end at all. It is hard — like no river reaching the ocean. Like your last message on Snapchat — I will do the same, but take this as my last message from my side. I know I told you everything. I never hid anything from you. I was being loyal, humble, and very respectful to you. This is all I have to say. If you ever think and acknowledge what I said, please allow me time to talk.
+                </p>
+            </div>
+
+            <div class="closing">
+                With all my love and truth,
+                <span class="name">— Bishal</span>
+                <span class="name">Your Kanxa</span>
+            </div>
+
+            <div class="wax-seal"></div>
+        </div>
+    </div>
+</body>
+</html>
